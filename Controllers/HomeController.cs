@@ -15,7 +15,28 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-         List<Usuario> usuarios = BD.ObtenerUsuarios();
+        List<Usuario> usuarios = BD.ObtenerUsuarios();
         return View();
+    }
+
+    [HttpPost]
+    public IActionResult VerificarUsuario(string usuario, string contraseña)
+    {
+        Usuario usuarioEncontrado = BD.verificarCuenta(usuario, contraseña);
+        if (usuarioEncontrado != null)
+        {
+            HttpContext.Session.SetString("usuario", Objeto.ObjectToString(usuarioEncontrado));
+            return RedirectToAction("Logeado");
+        }
+        else
+        {
+            ViewBag.Error = "Usuario o contraseña incorrectos";
+        }
+        return RedirectToAction("Index");
+    }
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Clear();
+        return RedirectToAction("Index");
     }
 }
