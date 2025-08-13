@@ -31,9 +31,14 @@ public class HomeController : Controller
         else
         {
             ViewBag.Error = "Usuario o contraseña incorrectos";
+            return View("Index");
         }
+    }
+    public IActionResult Logeado()
+    {
         return RedirectToAction("Index");
     }
+
     public IActionResult Logout()
     {
         HttpContext.Session.Clear();
