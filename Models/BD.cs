@@ -3,7 +3,8 @@ using Dapper;
 
 public class BD
 {
-    private static string _connectionString = @"Server=localhost;Database=TP06;Integrated Security=True;TrustServerCertificate=True;";
+private static string _connectionString =
+    @"Server=NACHO\SQLEXPRESS;Database=Tp06;Integrated Security=True;TrustServerCertificate=True;";
     
     public static List<Tarea> LevantarTarea(){
         List<Tarea> tareas = new List<Tarea>();

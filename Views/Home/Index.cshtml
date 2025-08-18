@@ -2,53 +2,46 @@
     ViewData["Title"] = "Acceso al Sistema";
 }
 
-<div class="login-container">
-    <div class="login-card">
-        <div class="login-header">
-            <div class="logo-circle">
-                <i class="fas fa-user-shield"></i>
-            </div>
-            <h1>Bienvenido</h1>
-            <p>Ingresa tus credenciales para acceder al sistema</p>
-        </div>
-        
-        @if (!string.IsNullOrEmpty(ViewBag.Error))
-        {
-            <div class="error-message">
-                <i class="fas fa-exclamation-triangle"></i>
-                <span>@ViewBag.Error</span>
-            </div>
-        }
-        
-        <form action='@Url.Action("VerificarUsuario", "Home")' method="POST" class="login-form">
-            <div class="input-group">
-                <div class="input-icon">
-                    <i class="fas fa-user"></i>
-                </div>
-                <input type="text" name="nombreUsuario" maxlength="20" placeholder="Nombre de usuario" required autocomplete="off">
-            </div>
-            
-            <div class="input-group">
-                <div class="input-icon">
-                    <i class="fas fa-lock"></i>
-                </div>
-                <input type="password" name="claveAcceso" maxlength="20" placeholder="Contraseña" required autocomplete="off">
-            </div>
-            
-            <button type="submit" class="login-btn">
-                <i class="fas fa-sign-in-alt"></i>
-                <span>Iniciar Sesión</span>
-            </button>
-        </form>
-        
-        <div class="login-footer">
-            <p><i class="fas fa-shield-alt"></i> Tu información está segura con nosotros</p>
-        </div>
+<div class="container">
+    <div class="header">
+        <h1>Gestor de Tareas</h1>
+        <p>Iniciá sesión o registrate para continuar</p>
     </div>
-    
-    <div class="background-decoration">
-        <div class="circle circle-1"></div>
-        <div class="circle circle-2"></div>
-        <div class="circle circle-3"></div>
+
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="alert alert-error">@ViewBag.Error</div>
+    }
+
+    <div class="auth-container">
+        <div class="auth-section">
+            <h2>Iniciar Sesión</h2>
+            <form asp-action="Login" asp-controller="Home" method="post" class="form">
+                <div class="form-group">
+                    <label for="loginUsuario">Usuario</label>
+                    <input type="text" id="loginUsuario" name="usuario" required class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Contraseña</label>
+                    <input type="password" id="loginPassword" name="contraseña" required class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+            </form>
+        </div>
+
+        <div class="auth-section">
+            <h2>Registrarse</h2>
+            <form asp-action="Registrarse" asp-controller="Home" method="post" class="form">
+                <div class="form-group">
+                    <label for="regUsuario">Usuario</label>
+                    <input type="text" id="regUsuario" name="usuario" required class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Contraseña</label>
+                    <input type="password" id="regPassword" name="contraseña" required class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-secondary">Registrarse</button>
+            </form>
+        </div>
     </div>
 </div>

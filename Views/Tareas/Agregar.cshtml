@@ -1,0 +1,24 @@
+@{
+    ViewData["Title"] = "Agregar Tarea";
+}
+
+<div class="container">
+    <div class="header">
+        <h1>Agregar Tarea</h1>
+        <p>Cargá una nueva tarea</p>
+    </div>
+
+    <form asp-action="Agregar" asp-controller="Tareas" method="post" class="form">
+        <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <input type="text" id="descripcion" name="descripcion" required class="form-control" />
+        </div>
+
+        <div class="actions-row">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <form asp-controller="Tareas" asp-action="Index" method="get" class="link-row">
+                <button type="submit" class="btn btn-secondary">Volver</button>
+            </form>
+        </div>
+    </form>
+</div>

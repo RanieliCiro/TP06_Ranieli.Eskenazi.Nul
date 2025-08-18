@@ -1,29 +1,47 @@
-﻿<!DOCTYPE html>
-<html lang="es">
+﻿@{
+    var title = ViewData["Title"] ?? "Gestor de Tareas";
+}
 
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - NombreProyecto</title>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <title>@title - Gestor de Tareas</title>
+
+    <link rel="stylesheet" href="~/estilo/estilo.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.min.css" /> <!-- opcional -->
 </head>
-
 <body>
-    <header>
-        NombreProyecto
-    </header>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-tasks"></i> Gestor de Tareas
+            </div>
+            <div class="nav-actions">
+                <form asp-controller="Home" asp-action="Index" method="get">
+                    <button type="submit" class="nav-btn"><i class="fas fa-home"></i> Inicio</button>
+                </form>
+                <form asp-controller="Tareas" asp-action="Index" method="get">
+                    <button type="submit" class="nav-btn"><i class="fas fa-list"></i> Mis Tareas</button>
+                </form>
+                <form asp-controller="Home" asp-action="Logout" method="get">
+                    <button type="submit" class="nav-btn"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+                </form>
+            </div>
+        </div>
+    </nav>
 
-    <main role="main">
+    <main class="main-content">
         @RenderBody()
     </main>
 
-    <footer>
-        &copy; @DateTime.Now.Year - NombreProyecto
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>© @DateTime.Now.Year - Gestor de Tareas</p>
+        </div>
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/js/site.js"></script>
 </body>
-
 </html>

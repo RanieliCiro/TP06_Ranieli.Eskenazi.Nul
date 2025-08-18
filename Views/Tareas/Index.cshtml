@@ -1,0 +1,57 @@
+@{
+    ViewData["Title"] = "Mis Tareas";
+    var usuario = ViewBag.Usuario as Usuario;
+    var tareas = ViewBag.Tareas as List<Tarea>;
+}
+
+<div class="container">
+    <div class="header">
+        <h1>Mis Tareas</h1>
+        <p>@(usuario != null ? $"Sesión de: {usuario.usuario}" : "")</p>
+    </div>
+
+    <div class="actions-row">
+        <form asp-controller="Tareas" asp-action="Agregar" method="get">
+            <button type="submit" class="btn btn-primary">Agregar Tarea</button>
+        </form>
+        <form asp-controller="Home" asp-action="Logout" method="get">
+            <button type="submit" class="btn btn-secondary">Cerrar sesión</button>
+        </form>
+    </div>
+
+    @if (tareas == null || tareas.Count == 0)
+    {
+        <div class="alert alert-info">No tenés tareas por ahora.</div>
+    }
+    else
+    {
+        <div class="task-list">
+            @foreach (var t in tareas)
+            {
+                <div class="task-item">
+                    <div class="task-info">
+                        <div class="task-title">@t.descripcion</div>
+                        <div class="task-meta">
+                            <span>ID: @t.id</span>
+                            <span>Estado: @(t.terminado ? "Terminada" : "Pendiente")</span>
+                        </div>
+                    </div>
+                    <div class="task-actions">
+                        <form asp-controller="Tareas" asp-action="Editar" method="get">
+                            <input type="hidden" name="id" value="@t.id" />
+                            <button type="submit" class="btn btn-secondary">Editar</button>
+                        </form>
+                        <form asp-controller="Tareas" asp-action="Compartir" method="get">
+                            <input type="hidden" name="id" value="@t.id" />
+                            <button type="submit" class="btn btn-secondary">Compartir</button>
+                        </form>
+                        <form asp-controller="Tareas" asp-action="Eliminar" method="get">
+                            <input type="hidden" name="id" value="@t.id" />
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

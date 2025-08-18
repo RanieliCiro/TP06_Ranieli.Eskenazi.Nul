@@ -1,0 +1,28 @@
+@{
+    ViewData["Title"] = "Compartir Tarea";
+    var tarea = ViewBag.Tarea as Tarea;
+    if (tarea == null) { <text>No existe la tarea</text>; return; }
+}
+
+<div class="container">
+    <div class="header">
+        <h1>Compartir Tarea</h1>
+        <p>Tarea #@tarea.id — @tarea.descripcion</p>
+    </div>
+
+    <form asp-action="Compartir" asp-controller="Tareas" method="post" class="form">
+        <input type="hidden" name="idTarea" value="@tarea.id" />
+
+        <div class="form-group">
+            <label for="emailUsuario">Email del usuario con quien compartir</label>
+            <input type="email" id="emailUsuario" name="emailUsuario" required class="form-control" />
+        </div>
+
+        <div class="actions-row">
+            <button type="submit" class="btn btn-primary">Compartir</button>
+            <form asp-controller="Tareas" asp-action="Index" method="get" class="link-row">
+                <button type="submit" class="btn btn-secondary">Volver</button>
+            </form>
+        </div>
+    </form>
+</div>
