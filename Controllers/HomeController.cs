@@ -12,49 +12,59 @@ public class HomeController : Controller
     {
         _logger = logger;
     }
-    public IActionResult Login()
-    {
-        return View();
-    }
 
-    [HttpPost]
-    public IActionResult VerificarUsuario(string usuario, string contraseña)
+    public IActionResult Index()
     {
-        Usuario usuarioEncontrado = BD.VerificarCuenta(usuario, contraseña);
-        if (usuarioEncontrado != null)
+        string usuarioStr = HttpContext.Session.GetString("integrante");
+        if (!string.IsNullOrEmpty(usuarioStr))
         {
-            HttpContext.Session.SetString("usuario", Objeto.ObjectToString(usuarioEncontrado));
             return RedirectToAction("Index", "Tareas");
         }
-        else
-        {
-            ViewBag.Error = "Usuario o contraseña incorrectos";
-            return View("Login");
-        }
-    }
-
-    public IActionResult Registro()
-    {
         return View();
     }
 
     [HttpPost]
-    public IActionResult RegistrarUsuario(string usuario, string contraseña)
+    public IActionResult Login(string usuario, string contraseña)
     {
-        Usuario existe = BD.ObtenerUsuarios().FirstOrDefault(u => u.usuario == usuario);
-        if (existe != null)
+        Usuario usr = BD.LevantarUsuario(usuario, contraseña);
+        if (usr != null)
         {
-            ViewBag.Error = "Ese usuario ya existe";
-            return View("Registro");
+            string usuarioStr = Objeto.ObjectToString(usr);
+            HttpContext.Session.SetString("integrante", usuarioStr);
+            return RedirectToAction("Index", "Tareas");
+        }
+        ViewBag.Error = "Usuario o contraseña incorrectos";
+        return View("Index");
+    }
+
+    [HttpPost]
+    public IActionResult Registrarse(string usuario, string contraseña)
+    {
+        Usuario existente = BD.LevantarUsuarioPorEmail(usuario);
+        if (existente != null)
+        {
+            ViewBag.Error = "Ya existe un usuario con ese nombre";
+            return View("Index");
         }
 
-        BD.RegistrarUsuario(new Usuario { usuario = usuario, contraseña = contraseña });
-        return RedirectToAction("Login");
+        Usuario nuevo = new Usuario { usuario = usuario, contraseña = contraseña };
+        BD.AgregarUsuario(nuevo);
+
+        string usuarioStr = Objeto.ObjectToString(nuevo);
+        HttpContext.Session.SetString("integrante", usuarioStr);
+
+
+        return RedirectToAction("Index", "Tareas");
     }
 
     public IActionResult Logout()
     {
         HttpContext.Session.Clear();
-        return RedirectToAction("Login");
+        return RedirectToAction("Index");
+    }
+
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
