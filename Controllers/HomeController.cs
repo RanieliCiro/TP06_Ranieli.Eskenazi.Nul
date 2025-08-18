@@ -12,36 +12,49 @@ public class HomeController : Controller
     {
         _logger = logger;
     }
-
-    public IActionResult Index()
+    public IActionResult Login()
     {
-        List<Usuario> usuarios = BD.ObtenerUsuarios();
         return View();
     }
 
     [HttpPost]
     public IActionResult VerificarUsuario(string usuario, string contraseña)
     {
-        Usuario usuarioEncontrado = BD.verificarCuenta(usuario, contraseña);
+        Usuario usuarioEncontrado = BD.VerificarCuenta(usuario, contraseña);
         if (usuarioEncontrado != null)
         {
             HttpContext.Session.SetString("usuario", Objeto.ObjectToString(usuarioEncontrado));
-            return RedirectToAction("Logeado");
+            return RedirectToAction("Index", "Tareas");
         }
         else
         {
             ViewBag.Error = "Usuario o contraseña incorrectos";
-            return View("Index");
+            return View("Login");
         }
     }
-    public IActionResult Logeado()
+
+    public IActionResult Registro()
     {
-        return RedirectToAction("Index");
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult RegistrarUsuario(string usuario, string contraseña)
+    {
+        Usuario existe = BD.ObtenerUsuarios().FirstOrDefault(u => u.usuario == usuario);
+        if (existe != null)
+        {
+            ViewBag.Error = "Ese usuario ya existe";
+            return View("Registro");
+        }
+
+        BD.RegistrarUsuario(new Usuario { usuario = usuario, contraseña = contraseña });
+        return RedirectToAction("Login");
     }
 
     public IActionResult Logout()
     {
         HttpContext.Session.Clear();
-        return RedirectToAction("Index");
+        return RedirectToAction("Login");
     }
 }
