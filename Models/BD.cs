@@ -5,8 +5,7 @@ using System.Linq;
 
 public class BD
 {
-    private static string _connectionString =
-        @"Server=NACHO\SQLEXPRESS;Database=Tp06;Integrated Security=True;TrustServerCertificate=True;";
+    private static string _connectionString =@"Server=localhost;Database=Tp06;Integrated Security=True;TrustServerCertificate=True;";
 
     public static List<Tarea> LevantarTarea()
     {
