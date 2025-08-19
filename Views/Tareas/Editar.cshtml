@@ -1,13 +1,13 @@
+@using Tp06.Models
 @{
     ViewData["Title"] = "Editar Tarea";
-    var tarea = ViewBag.Tarea as Tarea;
-    if (tarea == null) { <text>No existe la tarea</text>; return; }
+    var tarea = (Tarea)ViewBag.Tarea;
 }
 
 <div class="container">
     <div class="header">
         <h1>Editar Tarea</h1>
-        <p>Modificá la información de la tarea</p>
+        <p>Actualizá la descripción y el estado</p>
     </div>
 
     <form asp-action="Editar" asp-controller="Tareas" method="post" class="form">
@@ -15,21 +15,31 @@
 
         <div class="form-group">
             <label for="descripcion">Descripción</label>
-            <input type="text" id="descripcion" name="descripcion" required class="form-control" value="@tarea.descripcion" />
+            <input id="descripcion"
+                   name="descripcion"
+                   class="form-control"
+                   value="@tarea.descripcion"
+                   required />
         </div>
 
         <div class="form-group">
             <label>
-                <input type="checkbox" name="terminado" @(tarea.terminado ? "checked" : "") />
+                <input type="checkbox"
+                       name="terminado"
+                       value="true"
+                       @(tarea.terminado ? "checked" : "") />
                 Marcar como terminada
             </label>
         </div>
 
         <div class="actions-row">
-            <button type="submit" class="btn btn-primary">Guardar cambios</button>
-            <form asp-controller="Tareas" asp-action="Index" method="get" class="link-row">
-                <button type="submit" class="btn btn-secondary">Cancelar</button>
-            </form>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit"
+                    formmethod="get"
+                    formaction="@Url.Action("Index","Tareas")"
+                    class="btn btn-secondary">
+                Cancelar
+            </button>
         </div>
     </form>
 </div>

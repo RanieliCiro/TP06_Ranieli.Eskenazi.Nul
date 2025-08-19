@@ -1,177 +1,141 @@
+using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Tp06.Models;
 
-namespace Tp06.Controllers;
-
-public class TareasController : Controller
+namespace Tp06.Controllers
 {
-    public IActionResult Index()
+    public class TareasController : Controller
     {
-        string usuarioStr = HttpContext.Session.GetString("integrante");
-        if (string.IsNullOrEmpty(usuarioStr))
+        public IActionResult Index()
         {
-            return RedirectToAction("Index", "Home");
+            string usuarioStr = HttpContext.Session.GetString("integrante");
+            if (string.IsNullOrEmpty(usuarioStr)) return RedirectToAction("Index", "Home");
+
+            Usuario usuario = Objeto.StringToObject<Usuario>(usuarioStr);
+            var tareas = BD.LevantarTareasPorUsuario(usuario.id);
+
+            ViewBag.Usuario = usuario;
+            ViewBag.Tareas = tareas;
+            return View();
         }
 
-        Usuario usuario = Objeto.StringToObject<Usuario>(usuarioStr);
-        List<Tarea> tareas = BD.LevantarTareasPorUsuario(usuario.id);
-
-        ViewBag.Usuario = usuario;
-        ViewBag.Tareas = tareas;
-
-        return View();
-    }
-
-    public IActionResult Agregar()
-    {
-        string usuarioStr = HttpContext.Session.GetString("integrante");
-        if (string.IsNullOrEmpty(usuarioStr))
+        public IActionResult Agregar()
         {
-            return RedirectToAction("Index", "Home");
+            string usuarioStr = HttpContext.Session.GetString("integrante");
+            if (string.IsNullOrEmpty(usuarioStr)) return RedirectToAction("Index", "Home");
+            return View();
         }
 
-        return View();
-    }
-
-    [HttpPost]
-    public IActionResult Agregar(string descripcion)
-    {
-        string usuarioStr = HttpContext.Session.GetString("integrante");
-        if (string.IsNullOrEmpty(usuarioStr))
+        [HttpPost]
+        public IActionResult Agregar(string descripcion)
         {
-            return RedirectToAction("Index", "Home");
-        }
+            string usuarioStr = HttpContext.Session.GetString("integrante");
+            if (string.IsNullOrEmpty(usuarioStr)) return RedirectToAction("Index", "Home");
 
-        Usuario usuario = Objeto.StringToObject<Usuario>(usuarioStr);
-        if (usuario == null)
-        {
-            return RedirectToAction("Index", "Home");
-        }
+            Usuario usuario = Objeto.StringToObject<Usuario>(usuarioStr);
+            if (usuario == null) return RedirectToAction("Index", "Home");
 
-        Tarea nueva = new Tarea
-        {
-            descripcion = descripcion,
-            idCreador = usuario.id,
-            terminado = false
-        };
-
-        BD.AgregarTarea(nueva);
-
-        List<Tarea> todas = BD.LevantarTarea();
-        Tarea creada = todas.LastOrDefault(t => t.descripcion == nueva.descripcion && t.idCreador == usuario.id);
-        if (creada != null)
-        {
-            BD.CompartirTarea(creada.id, usuario.id);
-        }
-
-        return RedirectToAction("Index");
-    }
-
-    public IActionResult Editar(int id)
-    {
-        string usuarioStr = HttpContext.Session.GetString("integrante");
-        if (string.IsNullOrEmpty(usuarioStr))
-        {
-            return RedirectToAction("Index", "Home");
-        }
-
-        Tarea tarea = BD.LevantarTareaPorId(id);
-        if (tarea == null)
-        {
-            return RedirectToAction("Index");
-        }
-
-        ViewBag.Tarea = tarea;
-        return View();
-    }
-
-    [HttpPost]
-    public IActionResult Editar(int id, string descripcion, bool terminado)
-    {
-        string usuarioStr = HttpContext.Session.GetString("integrante");
-        if (string.IsNullOrEmpty(usuarioStr))
-        {
-            return RedirectToAction("Index", "Home");
-        }
-
-        Tarea tarea = BD.LevantarTareaPorId(id);
-        if (tarea != null)
-        {
-            tarea.descripcion = descripcion;
-            tarea.terminado = terminado;
-            BD.ModificarTarea(tarea);
-        }
-
-        return RedirectToAction("Index");
-    }
-
-    public IActionResult Eliminar(int id)
-    {
-        string usuarioStr = HttpContext.Session.GetString("integrante");
-        if (string.IsNullOrEmpty(usuarioStr))
-        {
-            return RedirectToAction("Index", "Home");
-        }
-
-        Tarea tarea = BD.LevantarTareaPorId(id);
-        if (tarea != null)
-        {
-            string data = HttpContext.Session.GetString("integrante");
-            Usuario usr = Objeto.StringToObject<Usuario>(data);
-            if (usr != null && tarea.idCreador == usr.id)
+            var nueva = new Tarea
             {
-                BD.EliminarTarea(id);
+                descripcion = descripcion,
+                idCreador = usuario.id,
+                terminado = false
+            };
+
+            // Crear y obtener el id real
+            int idTarea = BD.CrearTarea(nueva);
+            // Compartir con el creador para que le aparezca
+            BD.CompartirTarea(idTarea, usuario.id);
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Editar(int id)
+        {
+            string usuarioStr = HttpContext.Session.GetString("integrante");
+            if (string.IsNullOrEmpty(usuarioStr)) return RedirectToAction("Index", "Home");
+
+            Tarea tarea = BD.LevantarTareaPorId(id);
+            if (tarea == null) return RedirectToAction("Index");
+
+            ViewBag.Tarea = tarea;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Editar(int id, string descripcion, bool terminado)
+        {
+            string usuarioStr = HttpContext.Session.GetString("integrante");
+            if (string.IsNullOrEmpty(usuarioStr)) return RedirectToAction("Index", "Home");
+
+            Tarea tarea = BD.LevantarTareaPorId(id);
+            if (tarea != null)
+            {
+                tarea.descripcion = descripcion;
+                tarea.terminado = terminado;
+                BD.ModificarTarea(tarea);
             }
-        }
-
-        return RedirectToAction("Index");
-    }
-
-    public IActionResult Compartir(int id)
-    {
-        string usuarioStr = HttpContext.Session.GetString("integrante");
-        if (string.IsNullOrEmpty(usuarioStr))
-        {
-            return RedirectToAction("Index", "Home");
-        }
-
-        Tarea tarea = BD.LevantarTareaPorId(id);
-        if (tarea == null)
-        {
             return RedirectToAction("Index");
         }
 
-        ViewBag.Tarea = tarea;
-        return View();
-    }
-
-    [HttpPost]
-    public IActionResult Compartir(int idTarea, string emailUsuario)
-    {
-        string usuarioStr = HttpContext.Session.GetString("integrante");
-        if (string.IsNullOrEmpty(usuarioStr))
+        // Eliminar: solo el creador
+        public IActionResult Eliminar(int idTarea)
         {
-            return RedirectToAction("Index", "Home");
-        }
+            string usuarioStr = HttpContext.Session.GetString("integrante");
+            if (string.IsNullOrEmpty(usuarioStr)) return RedirectToAction("Index", "Home");
 
-        Usuario usuarioOrigen = Objeto.StringToObject<Usuario>(usuarioStr);
-        if (usuarioOrigen == null)
-        {
-            return RedirectToAction("Index", "Home");
-        }
+            Usuario actual = Objeto.StringToObject<Usuario>(usuarioStr);
+            Tarea tarea = BD.LevantarTareaPorId(idTarea);
+            if (tarea == null || tarea.idCreador != actual.id) return RedirectToAction("Index");
 
-        Tarea tarea = BD.LevantarTareaPorId(idTarea);
-        if (tarea == null || tarea.idCreador != usuarioOrigen.id)
-        {
+            BD.EliminarTarea(idTarea);
             return RedirectToAction("Index");
         }
 
-        Usuario usuarioDestino = BD.LevantarUsuarioPorEmail(emailUsuario);
-        if (usuarioDestino != null)
+        // GET Compartir: solo el creador
+        public IActionResult Compartir(int id)
         {
-            BD.CompartirTarea(idTarea, usuarioDestino.id);
+            string usuarioStr = HttpContext.Session.GetString("integrante");
+            if (string.IsNullOrEmpty(usuarioStr)) return RedirectToAction("Index", "Home");
+
+            Usuario actual = Objeto.StringToObject<Usuario>(usuarioStr);
+            Tarea tarea = BD.LevantarTareaPorId(id);
+            if (tarea == null || tarea.idCreador != actual.id) return RedirectToAction("Index");
+
+            ViewBag.Tarea = tarea;
+            return View();
         }
 
-        return RedirectToAction("Index");
+        // POST Compartir: por nombre(s) de usuario (N usuarios)
+        [HttpPost]
+        public IActionResult Compartir(int idTarea, string nombreUsuario)
+        {
+            string usuarioStr = HttpContext.Session.GetString("integrante");
+            if (string.IsNullOrEmpty(usuarioStr)) return RedirectToAction("Index", "Home");
+
+            Usuario origen = Objeto.StringToObject<Usuario>(usuarioStr);
+            Tarea tarea = BD.LevantarTareaPorId(idTarea);
+            if (tarea == null || tarea.idCreador != origen.id) return RedirectToAction("Index");
+
+            if (!string.IsNullOrWhiteSpace(nombreUsuario))
+            {
+                var separadores = new[] { ',', ';', '\n', '\r' };
+                var nombres = nombreUsuario
+                                .Split(separadores, StringSplitOptions.RemoveEmptyEntries)
+                                .Select(s => s.Trim())
+                                .Where(s => s.Length > 0)
+                                .Distinct(StringComparer.OrdinalIgnoreCase);
+
+                foreach (string nombre in nombres)
+                {
+                    var destino = BD.LevantarUsuarioPorNombre(nombre);
+                    if (destino != null)
+                        BD.CompartirTarea(idTarea, destino.id);
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }

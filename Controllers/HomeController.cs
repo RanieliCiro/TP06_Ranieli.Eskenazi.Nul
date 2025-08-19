@@ -40,7 +40,7 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Registrarse(string usuario, string contraseña)
     {
-        Usuario existente = BD.LevantarUsuarioPorEmail(usuario);
+        Usuario existente = BD.LevantarUsuarioPorNombre(usuario);
         if (existente != null)
         {
             ViewBag.Error = "Ya existe un usuario con ese nombre";
@@ -48,11 +48,11 @@ public class HomeController : Controller
         }
 
         Usuario nuevo = new Usuario { usuario = usuario, contraseña = contraseña };
-        BD.AgregarUsuario(nuevo);
+        int idNuevo = BD.AgregarUsuario(nuevo);
+        nuevo.id = idNuevo;
 
         string usuarioStr = Objeto.ObjectToString(nuevo);
         HttpContext.Session.SetString("integrante", usuarioStr);
-
 
         return RedirectToAction("Index", "Tareas");
     }

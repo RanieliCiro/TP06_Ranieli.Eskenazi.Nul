@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "/yJUQsjg1i0U+8m8MJkjqjZEXjsw0LwUhGIp9iXSBpg=",
+  "Hash": "0dG5VAGm38JpDBWD7vdWLEDchgc7oLEN/9OaY3kzobs=",
   "Source": "Tp06",
   "BasePath": "_content/Tp06",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "Tp06\\wwwroot",
       "Source": "Tp06",
-      "ContentRoot": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
       "BasePath": "_content/Tp06",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\css\\estilo.css",
+      "Identity": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\css\\estilo.css",
       "SourceId": "Tp06",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
       "BasePath": "_content/Tp06",
       "RelativePath": "css/estilo.css",
       "AssetKind": "All",
@@ -36,10 +36,10 @@
       "OriginalItemSpec": "wwwroot\\css\\estilo.css"
     },
     {
-      "Identity": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\favicon.ico",
+      "Identity": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\favicon.ico",
       "SourceId": "Tp06",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
       "BasePath": "_content/Tp06",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",
@@ -55,10 +55,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\js\\site.js",
+      "Identity": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\js\\site.js",
       "SourceId": "Tp06",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
       "BasePath": "_content/Tp06",
       "RelativePath": "js/site.js",
       "AssetKind": "All",
@@ -74,10 +74,10 @@
       "OriginalItemSpec": "wwwroot\\js\\site.js"
     },
     {
-      "Identity": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Identity": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "SourceId": "Tp06",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
       "BasePath": "_content/Tp06",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "AssetKind": "All",
@@ -93,10 +93,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Identity": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Identity": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "SourceId": "Tp06",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
       "BasePath": "_content/Tp06",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
       "AssetKind": "All",
@@ -112,10 +112,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Identity": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Identity": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "SourceId": "Tp06",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
       "BasePath": "_content/Tp06",
       "RelativePath": "lib/jquery-validation-unobtrusive/LICENSE.txt",
       "AssetKind": "All",
@@ -131,10 +131,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Identity": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Identity": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "SourceId": "Tp06",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
       "BasePath": "_content/Tp06",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.js",
       "AssetKind": "All",
@@ -150,10 +150,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Identity": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Identity": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "SourceId": "Tp06",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
       "BasePath": "_content/Tp06",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.min.js",
       "AssetKind": "All",
@@ -169,10 +169,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Identity": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Identity": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "SourceId": "Tp06",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
       "BasePath": "_content/Tp06",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.js",
       "AssetKind": "All",
@@ -188,10 +188,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Identity": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Identity": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "SourceId": "Tp06",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
       "BasePath": "_content/Tp06",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.min.js",
       "AssetKind": "All",
@@ -207,10 +207,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Identity": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Identity": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "SourceId": "Tp06",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
       "BasePath": "_content/Tp06",
       "RelativePath": "lib/jquery-validation/LICENSE.md",
       "AssetKind": "All",
@@ -226,10 +226,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Identity": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Identity": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "SourceId": "Tp06",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
       "BasePath": "_content/Tp06",
       "RelativePath": "lib/jquery/dist/jquery.js",
       "AssetKind": "All",
@@ -245,10 +245,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Identity": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Identity": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "SourceId": "Tp06",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
       "BasePath": "_content/Tp06",
       "RelativePath": "lib/jquery/dist/jquery.min.js",
       "AssetKind": "All",
@@ -264,10 +264,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Identity": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Identity": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "SourceId": "Tp06",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
       "BasePath": "_content/Tp06",
       "RelativePath": "lib/jquery/dist/jquery.min.map",
       "AssetKind": "All",
@@ -283,10 +283,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Identity": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Identity": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "SourceId": "Tp06",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\wwwroot\\",
       "BasePath": "_content/Tp06",
       "RelativePath": "lib/jquery/LICENSE.txt",
       "AssetKind": "All",

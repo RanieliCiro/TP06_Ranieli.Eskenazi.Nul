@@ -1,105 +1,131 @@
 using Microsoft.Data.SqlClient;
 using Dapper;
+using System.Collections.Generic;
+using System.Linq;
 
 public class BD
 {
-private static string _connectionString =
-    @"Server=NACHO\SQLEXPRESS;Database=Tp06;Integrated Security=True;TrustServerCertificate=True;";
-    
-    public static List<Tarea> LevantarTarea(){
-        List<Tarea> tareas = new List<Tarea>();
-        using(SqlConnection connection = new SqlConnection(_connectionString)){
-            string query = "SELECT * FROM Tarea";
-            tareas = connection.Query<Tarea>(query).ToList();
-        }
-        return tareas;
+    private static string _connectionString =
+        @"Server=NACHO\SQLEXPRESS;Database=Tp06;Integrated Security=True;TrustServerCertificate=True;";
+
+    // ---------- Tareas ----------
+
+    public static List<Tarea> LevantarTarea()
+    {
+        using var connection = new SqlConnection(_connectionString);
+        const string query = "SELECT * FROM Tarea";
+        return connection.Query<Tarea>(query).ToList();
     }
 
     public static Tarea LevantarTareaPorId(int id)
     {
-        Tarea tarea = null;
-        using(SqlConnection connection = new SqlConnection(_connectionString)){
-            string query = "SELECT * FROM Tarea WHERE id = @TId";
-            tarea = connection.QueryFirstOrDefault<Tarea>(query, new { TId = id });
-        }
-        return tarea;
+        using var connection = new SqlConnection(_connectionString);
+        const string query = "SELECT * FROM Tarea WHERE id = @TId";
+        return connection.QueryFirstOrDefault<Tarea>(query, new { TId = id });
     }
 
-    public static void AgregarTarea(Tarea tarea)
+    public static int CrearTarea(Tarea nueva)
     {
-        string query = "INSERT INTO Tarea (descripcion, idCreador, terminado) VALUES (@TDescripcion, @TIdCreador, 0)";
-        using(SqlConnection connection = new SqlConnection(_connectionString))
+        using var connection = new SqlConnection(_connectionString);
+        int nuevoId = connection.QuerySingle<int>("SELECT ISNULL(MAX(id), 0) + 1 FROM Tarea");
+
+        const string insert = @"INSERT INTO Tarea (id, descripcion, idCreador, terminado)
+                                VALUES (@id, @descripcion, @idCreador, 0);";
+
+        connection.Execute(insert, new
         {
-            connection.Execute(query, new { TDescripcion = tarea.descripcion, TIdCreador = tarea.idCreador });
-        }
+            id = nuevoId,
+            descripcion = nueva.descripcion,
+            idCreador = nueva.idCreador
+        });
+
+        return nuevoId;
     }
+
+    public static void AgregarTarea(Tarea tarea) => _ = CrearTarea(tarea);
 
     public static void ModificarTarea(Tarea tarea)
     {
-        string query = "UPDATE Tarea SET descripcion = @TDescripcion, terminado = @TTerminado WHERE id = @TId";
-        using(SqlConnection connection = new SqlConnection(_connectionString))
+        const string query = @"
+            UPDATE Tarea
+            SET descripcion = @TDescripcion,
+                terminado   = @TTerminado
+            WHERE id = @TId";
+        using var connection = new SqlConnection(_connectionString);
+        connection.Execute(query, new
         {
-            connection.Execute(query, new { TDescripcion = tarea.descripcion, TTerminado = tarea.terminado, TId = tarea.id });
-        }
+            TDescripcion = tarea.descripcion,
+            TTerminado = tarea.terminado,
+            TId = tarea.id
+        });
     }
 
     public static void EliminarTarea(int id)
     {
-        string query = "EXEC EliminarTarea @TId;";
-        using(SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            connection.Execute(query, new { TId = id });
-        }
-    }
-
-    public static Usuario LevantarUsuario(string Email, string Password)
-    {
-        Usuario usuario = null;
-        using (SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            string query = "SELECT * FROM Usuario WHERE usuario = @UUsuario AND [contraseña] = @UContraseña";
-            usuario = connection.QueryFirstOrDefault<Usuario>(query, new { UUsuario = Email, UContraseña = Password });
-        }
-        return usuario;
-    }
-
-    public static Usuario LevantarUsuarioPorEmail(string Email)
-    {
-        Usuario usuario = null;
-        using (SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            string query = "SELECT * FROM Usuario WHERE usuario = @UUsuario";
-            usuario = connection.QueryFirstOrDefault<Usuario>(query, new { UUsuario = Email });
-        }
-        return usuario;
-    }
-
-    public static void AgregarUsuario(Usuario usuario){
-        string query = "INSERT INTO Usuario (usuario, [contraseña]) VALUES (@UUsuario, @UContraseña)";
-        using(SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            connection.Execute(query, new { UUsuario = usuario.usuario, UContraseña = usuario.contraseña });
-        }
-    }
-
-    public static void CompartirTarea(int idTarea, int idUsuario)
-    {
-        string query = "INSERT INTO Usuario_Tarea (idUsuario, idTarea) VALUES (@TIdUsuario, @TIdTarea)";
-        using(SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            connection.Execute(query, new { TIdUsuario = idUsuario, TIdTarea = idTarea });
-        }
+        using var connection = new SqlConnection(_connectionString);
+        connection.Execute("DELETE FROM Usuario_Tarea WHERE idTarea = @TId", new { TId = id });
+        connection.Execute("DELETE FROM Tarea WHERE id = @TId", new { TId = id });
     }
 
     public static List<Tarea> LevantarTareasPorUsuario(int idUsuario)
     {
-        List<Tarea> tareas = new List<Tarea>();
-        using(SqlConnection connection = new SqlConnection(_connectionString)){
-            string query = @"SELECT t.* FROM Tarea t 
-                           INNER JOIN Usuario_Tarea uxt ON t.id = uxt.idTarea 
-                           WHERE uxt.idUsuario = @TIdUsuario";
-            tareas = connection.Query<Tarea>(query, new { TIdUsuario = idUsuario }).ToList();
-        }
-        return tareas;
+        using var connection = new SqlConnection(_connectionString);
+        const string query = @"SELECT t.*
+                               FROM Tarea t
+                               INNER JOIN Usuario_Tarea ut ON t.id = ut.idTarea
+                               WHERE ut.idUsuario = @TIdUsuario";
+        return connection.Query<Tarea>(query, new { TIdUsuario = idUsuario }).ToList();
+    }
+
+    // Evita duplicados en la relación
+    public static void CompartirTarea(int idTarea, int idUsuario)
+    {
+        using var cn = new SqlConnection(_connectionString);
+        const string sql = @"
+            IF NOT EXISTS (SELECT 1 FROM Usuario_Tarea WHERE idUsuario = @idUsuario AND idTarea = @idTarea)
+                INSERT INTO Usuario_Tarea (idUsuario, idTarea) VALUES (@idUsuario, @idTarea);";
+        cn.Execute(sql, new { idUsuario, idTarea });
+    }
+
+    // ---------- Usuarios ----------
+
+    public static Usuario LevantarUsuario(string usuario, string contraseña)
+    {
+        using var connection = new SqlConnection(_connectionString);
+        const string query = "SELECT * FROM Usuario WHERE usuario = @UUsuario AND [contraseña] = @UContraseña";
+        return connection.QueryFirstOrDefault<Usuario>(query, new { UUsuario = usuario, UContraseña = contraseña });
+    }
+
+    public static Usuario LevantarUsuarioPorNombre(string usuario)
+    {
+        using var connection = new SqlConnection(_connectionString);
+        const string query = "SELECT * FROM Usuario WHERE usuario = @UUsuario";
+        return connection.QueryFirstOrDefault<Usuario>(query, new { UUsuario = usuario });
+    }
+
+    // Mantengo por compatibilidad (busca por 'usuario' igual)
+    public static Usuario LevantarUsuarioPorEmail(string Email)
+    {
+        using var connection = new SqlConnection(_connectionString);
+        const string query = "SELECT * FROM Usuario WHERE usuario = @UUsuario";
+        return connection.QueryFirstOrDefault<Usuario>(query, new { UUsuario = Email });
+    }
+
+    public static int AgregarUsuario(Usuario usuario)
+    {
+        using var connection = new SqlConnection(_connectionString);
+        int nuevoId = connection.QuerySingle<int>("SELECT ISNULL(MAX(id), 0) + 1 FROM Usuario");
+
+        const string sql = @"INSERT INTO Usuario (id, usuario, [contraseña])
+                             VALUES (@id, @usuario, @contraseña)";
+
+        connection.Execute(sql, new
+        {
+            id = nuevoId,
+            usuario = usuario.usuario,
+            contraseña = usuario.contraseña
+        });
+
+        return nuevoId;
     }
 }

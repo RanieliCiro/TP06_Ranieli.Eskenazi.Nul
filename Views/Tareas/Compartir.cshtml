@@ -1,28 +1,35 @@
+@using Tp06.Models
 @{
-    ViewData["Title"] = "Compartir Tarea";
-    var tarea = ViewBag.Tarea as Tarea;
-    if (tarea == null) { <text>No existe la tarea</text>; return; }
+    ViewData["Title"] = "Compartir tarea";
+    var tarea = (Tarea)ViewBag.Tarea;
 }
 
 <div class="container">
     <div class="header">
-        <h1>Compartir Tarea</h1>
-        <p>Tarea #@tarea.id — @tarea.descripcion</p>
+        <h1>Compartir tarea</h1>
+        <p>Usuario con quien compartir</p>
     </div>
 
     <form asp-action="Compartir" asp-controller="Tareas" method="post" class="form">
         <input type="hidden" name="idTarea" value="@tarea.id" />
 
         <div class="form-group">
-            <label for="emailUsuario">Email del usuario con quien compartir</label>
-            <input type="email" id="emailUsuario" name="emailUsuario" required class="form-control" />
+            <label for="nombreUsuario">Usuario(s)</label>
+            <!-- podés escribir varios nombres separados por coma ; o saltos de línea -->
+            <textarea id="nombreUsuario" name="nombreUsuario" class="form-control" required
+                      placeholder="ej: juan, maria; pedro"></textarea>
         </div>
 
         <div class="actions-row">
             <button type="submit" class="btn btn-primary">Compartir</button>
-            <form asp-controller="Tareas" asp-action="Index" method="get" class="link-row">
-                <button type="submit" class="btn btn-secondary">Volver</button>
-            </form>
+
+            <button type="submit"
+                    formmethod="get"
+                    formaction="@Url.Action("Index","Tareas")"
+                    formnovalidate
+                    class="btn btn-secondary">
+                Volver
+            </button>
         </div>
     </form>
 </div>
