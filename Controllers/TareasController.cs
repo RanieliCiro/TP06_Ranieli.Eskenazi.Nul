@@ -43,9 +43,7 @@ namespace Tp06.Controllers
                 terminado = false
             };
 
-            // Crear y obtener el id real
             int idTarea = BD.CrearTarea(nueva);
-            // Compartir con el creador para que le aparezca
             BD.CompartirTarea(idTarea, usuario.id);
 
             return RedirectToAction("Index");
@@ -79,7 +77,6 @@ namespace Tp06.Controllers
             return RedirectToAction("Index");
         }
 
-        // Eliminar: solo el creador
         public IActionResult Eliminar(int idTarea)
         {
             string usuarioStr = HttpContext.Session.GetString("integrante");
@@ -93,7 +90,6 @@ namespace Tp06.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET Compartir: solo el creador
         public IActionResult Compartir(int id)
         {
             string usuarioStr = HttpContext.Session.GetString("integrante");
@@ -107,7 +103,6 @@ namespace Tp06.Controllers
             return View();
         }
 
-        // POST Compartir: por nombre(s) de usuario (N usuarios)
         [HttpPost]
         public IActionResult Compartir(int idTarea, string nombreUsuario)
         {

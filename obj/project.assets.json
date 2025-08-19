@@ -2491,11 +2491,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\Tp06.csproj",
+      "projectUniqueName": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\Tp06.csproj",
       "projectName": "Tp06",
-      "projectPath": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\Tp06.csproj",
+      "projectPath": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\Tp06.csproj",
       "packagesPath": "C:\\Users\\nacho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\obj\\",
+      "outputPath": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\nacho\\AppData\\Roaming\\NuGet\\NuGet.Config"

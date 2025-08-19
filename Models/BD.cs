@@ -8,8 +8,6 @@ public class BD
     private static string _connectionString =
         @"Server=NACHO\SQLEXPRESS;Database=Tp06;Integrated Security=True;TrustServerCertificate=True;";
 
-    // ---------- Tareas ----------
-
     public static List<Tarea> LevantarTarea()
     {
         using var connection = new SqlConnection(_connectionString);
@@ -29,35 +27,21 @@ public class BD
         using var connection = new SqlConnection(_connectionString);
         int nuevoId = connection.QuerySingle<int>("SELECT ISNULL(MAX(id), 0) + 1 FROM Tarea");
 
-        const string insert = @"INSERT INTO Tarea (id, descripcion, idCreador, terminado)
-                                VALUES (@id, @descripcion, @idCreador, 0);";
-
-        connection.Execute(insert, new
-        {
-            id = nuevoId,
-            descripcion = nueva.descripcion,
-            idCreador = nueva.idCreador
-        });
-
+        const string insert = @"INSERT INTO Tarea (id, descripcion, idCreador, terminado) VALUES (@id, @descripcion, @idCreador, 0);";
+        connection.Execute(insert, new {id = nuevoId, descripcion = nueva.descripcion, idCreador = nueva.idCreador});
         return nuevoId;
     }
 
-    public static void AgregarTarea(Tarea tarea) => _ = CrearTarea(tarea);
+    public static void AgregarTarea(Tarea tarea)
+    {
+        CrearTarea(tarea);
+    }
 
     public static void ModificarTarea(Tarea tarea)
     {
-        const string query = @"
-            UPDATE Tarea
-            SET descripcion = @TDescripcion,
-                terminado   = @TTerminado
-            WHERE id = @TId";
+        const string query = @"UPDATE Tarea SET descripcion = @TDescripcion, terminado   = @TTerminado WHERE id = @TId";
         using var connection = new SqlConnection(_connectionString);
-        connection.Execute(query, new
-        {
-            TDescripcion = tarea.descripcion,
-            TTerminado = tarea.terminado,
-            TId = tarea.id
-        });
+        connection.Execute(query, new {TDescripcion = tarea.descripcion, TTerminado = tarea.terminado, TId = tarea.id});
     }
 
     public static void EliminarTarea(int id)
@@ -70,14 +54,10 @@ public class BD
     public static List<Tarea> LevantarTareasPorUsuario(int idUsuario)
     {
         using var connection = new SqlConnection(_connectionString);
-        const string query = @"SELECT t.*
-                               FROM Tarea t
-                               INNER JOIN Usuario_Tarea ut ON t.id = ut.idTarea
-                               WHERE ut.idUsuario = @TIdUsuario";
+        const string query = @"SELECT t.* FROM Tarea t INNER JOIN Usuario_Tarea ut ON t.id = ut.idTarea WHERE ut.idUsuario = @TIdUsuario";
         return connection.Query<Tarea>(query, new { TIdUsuario = idUsuario }).ToList();
     }
 
-    // Evita duplicados en la relación
     public static void CompartirTarea(int idTarea, int idUsuario)
     {
         using var cn = new SqlConnection(_connectionString);
@@ -86,8 +66,6 @@ public class BD
                 INSERT INTO Usuario_Tarea (idUsuario, idTarea) VALUES (@idUsuario, @idTarea);";
         cn.Execute(sql, new { idUsuario, idTarea });
     }
-
-    // ---------- Usuarios ----------
 
     public static Usuario LevantarUsuario(string usuario, string contraseña)
     {
@@ -103,7 +81,6 @@ public class BD
         return connection.QueryFirstOrDefault<Usuario>(query, new { UUsuario = usuario });
     }
 
-    // Mantengo por compatibilidad (busca por 'usuario' igual)
     public static Usuario LevantarUsuarioPorEmail(string Email)
     {
         using var connection = new SqlConnection(_connectionString);
@@ -116,16 +93,8 @@ public class BD
         using var connection = new SqlConnection(_connectionString);
         int nuevoId = connection.QuerySingle<int>("SELECT ISNULL(MAX(id), 0) + 1 FROM Usuario");
 
-        const string sql = @"INSERT INTO Usuario (id, usuario, [contraseña])
-                             VALUES (@id, @usuario, @contraseña)";
-
-        connection.Execute(sql, new
-        {
-            id = nuevoId,
-            usuario = usuario.usuario,
-            contraseña = usuario.contraseña
-        });
-
+        const string sql = @"INSERT INTO Usuario (id, usuario, [contraseña]) VALUES (@id, @usuario, @contraseña)";
+        connection.Execute(sql, new {id = nuevoId, usuario = usuario.usuario, contraseña = usuario.contraseña});
         return nuevoId;
     }
 }

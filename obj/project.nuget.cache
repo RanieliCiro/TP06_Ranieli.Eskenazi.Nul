@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QBLKIFc4NVY=",
+  "dgSpecHash": "1Y4GA8Sm29Q=",
   "success": true,
-  "projectFilePath": "C:\\Users\\nacho\\Downloads\\TP06_Ranieli.Eskenazi.Nul\\Tp06.csproj",
+  "projectFilePath": "C:\\Users\\nacho\\OneDrive\\Desktop\\TP06_Ranieli.Eskenazi.Nul\\Tp06.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nacho\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\nacho\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
