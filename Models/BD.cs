@@ -7,13 +7,6 @@ public class BD
 {
     private static string _connectionString =@"Server=localhost;Database=Tp06;Integrated Security=True;TrustServerCertificate=True;";
 
-    public static List<Tarea> LevantarTarea()
-    {
-        using var connection = new SqlConnection(_connectionString);
-        const string query = "SELECT * FROM Tarea";
-        return connection.Query<Tarea>(query).ToList();
-    }
-
     public static Tarea LevantarTareaPorId(int id)
     {
         using var connection = new SqlConnection(_connectionString);
@@ -29,11 +22,6 @@ public class BD
         const string insert = @"INSERT INTO Tarea (id, descripcion, idCreador, terminado) VALUES (@id, @descripcion, @idCreador, 0);";
         connection.Execute(insert, new {id = nuevoId, descripcion = nueva.descripcion, idCreador = nueva.idCreador});
         return nuevoId;
-    }
-
-    public static void AgregarTarea(Tarea tarea)
-    {
-        CrearTarea(tarea);
     }
 
     public static void ModificarTarea(Tarea tarea)
@@ -79,21 +67,14 @@ public class BD
         const string query = "SELECT * FROM Usuario WHERE usuario = @UUsuario";
         return connection.QueryFirstOrDefault<Usuario>(query, new { UUsuario = usuario });
     }
-
-    public static Usuario LevantarUsuarioPorEmail(string Email)
-    {
-        using var connection = new SqlConnection(_connectionString);
-        const string query = "SELECT * FROM Usuario WHERE usuario = @UUsuario";
-        return connection.QueryFirstOrDefault<Usuario>(query, new { UUsuario = Email });
-    }
-
+    
     public static int AgregarUsuario(Usuario usuario)
     {
         using var connection = new SqlConnection(_connectionString);
         int nuevoId = connection.QuerySingle<int>("SELECT ISNULL(MAX(id), 0) + 1 FROM Usuario");
 
         const string sql = @"INSERT INTO Usuario (id, usuario, [contraseña]) VALUES (@id, @usuario, @contraseña)";
-        connection.Execute(sql, new {id = nuevoId, usuario = usuario.usuario, contraseña = usuario.contraseña});
+        connection.Execute(sql, new { id = nuevoId, usuario = usuario.usuario, contraseña = usuario.contraseña });
         return nuevoId;
     }
 }
