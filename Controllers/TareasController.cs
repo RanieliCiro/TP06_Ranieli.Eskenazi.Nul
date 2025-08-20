@@ -77,16 +77,16 @@ namespace Tp06.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Eliminar(int idTarea)
+        public IActionResult Eliminar(int id)
         {
             string usuarioStr = HttpContext.Session.GetString("integrante");
             if (string.IsNullOrEmpty(usuarioStr)) return RedirectToAction("Index", "Home");
 
             Usuario actual = Objeto.StringToObject<Usuario>(usuarioStr);
-            Tarea tarea = BD.LevantarTareaPorId(idTarea);
+            Tarea tarea = BD.LevantarTareaPorId(id);
             if (tarea == null || tarea.idCreador != actual.id) return RedirectToAction("Index");
 
-            BD.EliminarTarea(idTarea);
+            BD.EliminarTarea(id);
             return RedirectToAction("Index");
         }
 

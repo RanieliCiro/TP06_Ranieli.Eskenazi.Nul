@@ -5,8 +5,14 @@ using System.Linq;
 
 public class BD
 {
-    private static string _connectionString =@"Server=localhost;Database=Tp06;Integrated Security=True;TrustServerCertificate=True;";
-
+    private static string _connectionString =
+        @"Server=NACHO\SQLEXPRESS;Database=Tp06;Integrated Security=True;TrustServerCertificate=True;";
+    public static List<Tarea> LevantarTarea()
+    {
+        using var connection = new SqlConnection(_connectionString);
+        const string query = "SELECT * FROM Tarea";
+        return connection.Query<Tarea>(query).ToList();
+    }
     public static Tarea LevantarTareaPorId(int id)
     {
         using var connection = new SqlConnection(_connectionString);
@@ -18,7 +24,6 @@ public class BD
     {
         using var connection = new SqlConnection(_connectionString);
         int nuevoId = connection.QuerySingle<int>("SELECT ISNULL(MAX(id), 0) + 1 FROM Tarea");
-
         const string insert = @"INSERT INTO Tarea (id, descripcion, idCreador, terminado) VALUES (@id, @descripcion, @idCreador, 0);";
         connection.Execute(insert, new {id = nuevoId, descripcion = nueva.descripcion, idCreador = nueva.idCreador});
         return nuevoId;
